@@ -19,7 +19,6 @@ class NB:
             n_inst = len(feats)
             for col in feats.columns:
                 self.stats_per_class[label][col] = (feats[col].sum(), feats[col].sum()/n_inst)
-        print(self.stats_per_class)
 
     def predict(self, x):
         existing_cols = []
@@ -33,6 +32,12 @@ class NB:
                 prob *= stats[feat][1]
             n_instances = prob * len(self.dict_per_class[cls])
             prob_cls[cls] = n_instances / len(self.dict_per_class[cls])
-        print(prob_cls)
+        max_prob = -1
+        answer = None
+        for k, v in prob_cls.items():
+            if v > max_prob:
+                answer = k
+        return answer
+
 
 
